@@ -5,7 +5,6 @@ import models.ReservaDAO;
 import models.Venta;
 import models.VentaDAO;
 
-import java.util.Date;
 import java.util.List;
 
 public class ReservaController {
@@ -20,15 +19,9 @@ public class ReservaController {
         reservaDAO.insertarReserva(reserva);
     }
 
-    // Método para obtener una reserva por su ID
+
     public Reserva obtenerReservaPorId(int reservaId) {
         return reservaDAO.obtenerReservaPorId(reservaId);  // Llamamos al DAO para obtener la reserva desde la base de datos
-    }
-
-
-    public void eliminarReserva(int reservaId) {
-        ReservaDAO reservaDAO = new ReservaDAO();
-        reservaDAO.eliminarReserva(reservaId); // Llama al método DAO para eliminar la reserva
     }
 
 

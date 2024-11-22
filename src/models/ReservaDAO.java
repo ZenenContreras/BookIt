@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ReservaDAO {
 
-    // Método para insertar una nueva reserva en la base de datos
+
     public void insertarReserva(Reserva reserva) {
         String sql = "INSERT INTO reserva (cantidad_entradas, usuarioid, eventoid, fecha_reserva, estado_pagoid) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -24,32 +24,7 @@ public class ReservaDAO {
         }
     }
 
-    // Método para obtener todas las reservas de un usuario
-    public List<Reserva> obtenerReservasPorUsuario(int usuarioId) {
-        List<Reserva> reservas = new ArrayList<>();
-        String sql = "SELECT * FROM reserva WHERE usuarioid = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, usuarioId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    reservas.add(new Reserva(
-                            rs.getInt("id"),
-                            rs.getInt("cantidad_entradas"),
-                            rs.getInt("usuarioid"),
-                            rs.getInt("eventoid"),
-                            rs.getDate("fecha_reserva"),
-                            rs.getInt("estado_pagoid") // Estado como entero
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al obtener reservas por usuario", e);
-        }
-        return reservas;
-    }
 
-    // Método para actualizar una reserva existente
     public void actualizarReserva(Reserva reserva) {
         String sql = "UPDATE reserva SET cantidad_entradas = ?, usuarioid = ?, eventoid = ?, fecha_reserva = ?, estado_pagoid = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -66,19 +41,7 @@ public class ReservaDAO {
         }
     }
 
-    // Método para eliminar una reserva
-    public void eliminarReserva(int id) {
-        String sql = "DELETE FROM reserva WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar reserva", e);
-        }
-    }
 
-    // Método para obtener una reserva por ID
     public Reserva obtenerReservaPorId(int id) {
         String sql = "SELECT * FROM reserva WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
