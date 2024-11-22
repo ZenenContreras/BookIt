@@ -1,0 +1,8 @@
+2024-11-21 21:23:24.632146-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]String sql = ""INSERT INTO usuarios (nombreUsuario, contraseña, tipoUsuario) VALUES (?, ?, ?)"""; se esperaba "SAVEPOINT, SCRIPT, SHUTDOWN"
+Syntax error in SQL statement "[*]String sql = ""INSERT INTO usuarios (nombreUsuario, contraseña, tipoUsuario) VALUES (?, ?, ?)"""; expected "SAVEPOINT, SCRIPT, SHUTDOWN"; SQL statement:
+String sql = "INSERT INTO usuarios (nombreUsuario, contraseña, tipoUsuario) VALUES (?, ?, ?)" [42001-232]
+2024-11-21 21:32:43.161049-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]DESCRIBE usuarios"; se esperaba "DELETE, DROP"
+Syntax error in SQL statement "[*]DESCRIBE usuarios"; expected "DELETE, DROP"; SQL statement:
+DESCRIBE usuarios [42001-232]
