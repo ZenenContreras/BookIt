@@ -32,5 +32,3 @@
 4. **Dependencias Adicionales:**
    - Controladores JDBC para PostgreSQL (`postgresql-42.x.x.jar`).
    - Librerías externas utilizadas (si aplica).
-
-## Estructura del Proyecto
