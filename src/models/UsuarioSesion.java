@@ -25,4 +25,25 @@ public class UsuarioSesion {
     public int getId() {
         return usuario != null ? usuario.getId() : -1;
     }
+
+    public String getNombreUsuario() {
+        return usuario != null ? usuario.getNombreUsuario() : "Usuario no autenticado";
+    }
+
+    public boolean esAdministrador() {
+        return usuario != null && usuario.esAdministrador();
+    }
+
+    public boolean esCliente() {
+        return usuario != null && usuario.esCliente();
+    }
+
+    public void cerrarSesion() {
+        this.usuario = null;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioSesion{usuario=" + (usuario != null ? usuario.toString() : "No autenticado") + '}';
+    }
 }

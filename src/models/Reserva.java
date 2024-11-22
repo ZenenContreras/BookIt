@@ -4,37 +4,85 @@ import java.sql.Date;
 
 public class Reserva {
     private int id;
-    private int cantidadEntradas;
+    private int cantidad;
     private int usuarioId;
     private int eventoId;
-    private Date fechaReserva;
-    private int estadoPagoId;
+    private Date fecha;
+    private int estado; // Cambiado a int para reflejar el campo en la base de datos
 
-    public Reserva(int id, int cantidadEntradas, int usuarioId, int eventoId, Date fechaReserva, int estadoPagoId) {
+    // Constructor completo
+    public Reserva(int id, int cantidad, int usuarioId, int eventoId, Date fecha, int estado) {
         this.id = id;
-        this.cantidadEntradas = cantidadEntradas;
+        this.cantidad = cantidad;
         this.usuarioId = usuarioId;
         this.eventoId = eventoId;
-        this.fechaReserva = fechaReserva;
-        this.estadoPagoId = estadoPagoId;
+        this.fecha = fecha;
+        this.estado = estado;
+    }
+
+    // Constructor para nuevas reservas
+    public Reserva(int cantidad, int usuarioId, int eventoId, Date fecha, int estado) {
+        this(0, cantidad, usuarioId, eventoId, fecha, estado);
     }
 
     // Getters y Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public int getCantidadEntradas() { return cantidadEntradas; }
-    public void setCantidadEntradas(int cantidadEntradas) { this.cantidadEntradas = cantidadEntradas; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public int getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
+    public int getCantidad() {
+        return cantidad;
+    }
 
-    public int getEventoId() { return eventoId; }
-    public void setEventoId(int eventoId) { this.eventoId = eventoId; }
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
-    public Date getFechaReserva() { return fechaReserva; }
-    public void setFechaReserva(Date fechaReserva) { this.fechaReserva = fechaReserva; }
+    public int getUsuarioId() {
+        return usuarioId;
+    }
 
-    public int getEstadoPagoId() { return estadoPagoId; }
-    public void setEstadoPagoId(int estadoPagoId) { this.estadoPagoId = estadoPagoId; }
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public int getEventoId() {
+        return eventoId;
+    }
+
+    public void setEventoId(int eventoId) {
+        this.eventoId = eventoId;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "id=" + id +
+                ", cantidad=" + cantidad +
+                ", usuarioId=" + usuarioId +
+                ", eventoId=" + eventoId +
+                ", fecha=" + fecha +
+                ", estado=" + estado +
+                '}';
+    }
 }

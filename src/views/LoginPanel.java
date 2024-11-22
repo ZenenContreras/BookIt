@@ -1,6 +1,8 @@
 package views;
 
 import controllers.UsuarioController;
+import models.Usuario;
+import models.UsuarioSesion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,19 +69,29 @@ public class LoginPanel extends JFrame {
             String password = new String(txtContraseña.getPassword());
 
             if (usuarioController.validarCredenciales(email, password)) {
-                String tipoUsuario = usuarioController.obtenerTipoUsuario(email);
-                if ("Administrador".equals(tipoUsuario)) {
-                    new AdminPanel(); // Redirige al panel de administrador
-                } else if ("Cliente".equals(tipoUsuario)) {
-                    new ClientePanel(); // Redirige al panel de cliente
+                Usuario usuario = usuarioController.obtenerUsuarioPorEmail(email);
+
+                if (usuario != null) {
+                    // Configurar la sesión del usuario
+                    UsuarioSesion.getInstance().setUsuario(usuario);
+
+                    if (usuario.esAdministrador()) {
+                        new AdminPanel(this); // Pasar LoginPanel como referencia
+                    } else if (usuario.esCliente()) {
+                        new ClientePanel(this); // Pasar LoginPanel como referencia
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Tipo de usuario no reconocido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    dispose(); // Cierra el login después de iniciar sesión
                 } else {
-                    JOptionPane.showMessageDialog(this, "Tipo de usuario no reconocido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                dispose(); // Cierra el login después de iniciar sesión
             } else {
                 JOptionPane.showMessageDialog(this, "Credenciales inválidas", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+
 
 
 

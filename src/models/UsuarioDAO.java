@@ -1,6 +1,7 @@
 package models;
 
 import controllers.DatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
 
+    // Validar usuario por correo y contraseña
     public boolean validarUsuario(String email, String password) {
         String sql = "SELECT * FROM usuario WHERE correo = ? AND contraseña = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -22,10 +24,12 @@ public class UsuarioDAO {
         }
     }
 
-    public String obtenerTipoUsuarioPorEmail(String email, String tableName, String columnName, String columnType) {
-        String sql = "SELECT tipo_usuario.estado FROM " + tableName +
-                " INNER JOIN tipo_usuario ON " + tableName + ".tipo_usuarioid = tipo_usuario.id " +
-                "WHERE " + columnName + " = ?";
+    // Obtener tipo de usuario por correo
+    public String obtenerTipoUsuarioPorEmail(String email) {
+        String sql = "SELECT tu.estado " +
+                "FROM usuario u " +
+                "INNER JOIN tipo_usuario tu ON u.tipo_usuarioid = tu.id " +
+                "WHERE u.correo = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
@@ -40,7 +44,7 @@ public class UsuarioDAO {
         return null;
     }
 
-
+    // Agregar un nuevo usuario
     public void agregarUsuario(String nombre, String correo, String contraseña) {
         String query = "INSERT INTO usuario (nombre, correo, contraseña, tipo_usuarioid) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -55,27 +59,40 @@ public class UsuarioDAO {
         }
     }
 
+    // Obtener un usuario por correo
     public Usuario obtenerUsuarioPorEmail(String email) {
-        String sql = "SELECT * FROM usuario WHERE correo = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
+        String sql = "SELECT id, nombre, correo, contraseña, tipo_usuarioid FROM usuario WHERE correo = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nombre = resultSet.getString("nombre");
+                    String correo = resultSet.getString("correo");
+                    String contraseña = resultSet.getString("contraseña");
+                    int tipoUsuarioId = resultSet.getInt("tipo_usuarioid");
+
+                    System.out.println("Datos recuperados: ");
+                    System.out.println("ID: " + id);
+                    System.out.println("Nombre: " + nombre);
+                    System.out.println("Correo: " + correo);
+                    System.out.println("Contraseña: " + contraseña);
+                    System.out.println("Tipo Usuario ID: " + tipoUsuarioId);
+
                     return new Usuario(
-                            resultSet.getInt("id"),
-                            resultSet.getString("nombre"),
-                            resultSet.getString("correo"),
-                            resultSet.getString("contraseña"),
-                            resultSet.getInt("tipo_usuarioid")
+                            id,
+                            nombre,
+                            correo,
+                            contraseña,
+                            Usuario.TipoUsuario.fromId(tipoUsuarioId)
                     );
                 }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener usuario por email", e);
         }
-        return null;
+        return null; // Devuelve null si no se encuentra el usuario
     }
-
-
 }

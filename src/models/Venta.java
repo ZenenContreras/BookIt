@@ -1,14 +1,28 @@
 package models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Venta {
     private int id;
-    private int monto;
-    private Date fechaPago;
-    private int reservaId;
-    private int metodoPagoId;
+    private int cantidad;
+    private int usuarioId;
+    private int eventoId;
+    private Date fecha;
 
+    public Venta(int id, int cantidad, int usuarioId, int eventoId, Date fecha) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.usuarioId = usuarioId;
+        this.eventoId = eventoId;
+        this.fecha = fecha;
+    }
+
+    // Constructor para inserciones
+    public Venta(int cantidad, int usuarioId, int eventoId, Date fecha) {
+        this(0, cantidad, usuarioId, eventoId, fecha);
+    }
+
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -17,35 +31,35 @@ public class Venta {
         this.id = id;
     }
 
-    public int getMonto() {
-        return monto;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public Date getFechaPago() {
-        return fechaPago;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setFechaPago(Date fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public int getReservaId() {
-        return reservaId;
+    public int getEventoId() {
+        return eventoId;
     }
 
-    public void setReservaId(int reservaId) {
-        this.reservaId = reservaId;
+    public void setEventoId(int eventoId) {
+        this.eventoId = eventoId;
     }
 
-    public int getMetodoPagoId() {
-        return metodoPagoId;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setMetodoPagoId(int metodoPagoId) {
-        this.metodoPagoId = metodoPagoId;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

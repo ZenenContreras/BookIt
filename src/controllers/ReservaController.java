@@ -2,7 +2,10 @@ package controllers;
 
 import models.Reserva;
 import models.ReservaDAO;
+import models.Venta;
+import models.VentaDAO;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReservaController {
@@ -13,18 +16,43 @@ public class ReservaController {
     }
 
     public void realizarReserva(Reserva reserva) {
-        reservaDAO.realizarReserva(reserva);
+        reserva.setEstado(1); // Estado inicial como "Aceptada"
+        reservaDAO.insertarReserva(reserva);
     }
 
-    public List<Reserva> obtenerReservasPorCliente(int clienteId) {
-        return reservaDAO.obtenerReservasPorCliente(clienteId);
+    // Método para obtener una reserva por su ID
+    public Reserva obtenerReservaPorId(int reservaId) {
+        return reservaDAO.obtenerReservaPorId(reservaId);  // Llamamos al DAO para obtener la reserva desde la base de datos
     }
 
-    public List<Reserva> obtenerReservasPendientes() {
-        return reservaDAO.obtenerReservasPorEstado(1); // 1 = Pendiente
+
+    public void eliminarReserva(int reservaId) {
+        ReservaDAO reservaDAO = new ReservaDAO();
+        reservaDAO.eliminarReserva(reservaId); // Llama al método DAO para eliminar la reserva
     }
 
-    public void actualizarEstadoReserva(int reservaId, int nuevoEstado) {
-        reservaDAO.actualizarEstadoReserva(reservaId, nuevoEstado);
+
+    public void actualizarReserva(Reserva reserva) {
+        reservaDAO.actualizarReserva(reserva);
     }
+
+    public List<Reserva> obtenerTodasLasReservas() {
+        return reservaDAO.obtenerTodasLasReservas();
+    }
+
+    public void registrarVentaDesdeReserva(Reserva reserva) {
+        VentaDAO ventaDAO = new VentaDAO();
+        // Crea una nueva venta a partir de la reserva aceptada
+        Venta venta = new Venta(
+                0, // ID se autogenera
+                reserva.getCantidad(),
+                reserva.getUsuarioId(),
+                reserva.getEventoId(),
+                new java.sql.Date(System.currentTimeMillis())// Fecha actual
+        );
+        ventaDAO.insertarVenta(venta); // Registrar la venta
+    }
+
+
+
 }

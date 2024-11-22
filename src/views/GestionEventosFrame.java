@@ -13,9 +13,11 @@ public class GestionEventosFrame extends BasePanel {
     private final EventoController eventoController;
     private final DefaultTableModel tableModel;
     private final JTable table;
+    private JFrame previousPanel;
 
-    public GestionEventosFrame() {
-        super("BookIt - Gestión de Eventos");
+    public GestionEventosFrame(JFrame previousPanel) {
+        super("BookIt - Gestión de Eventos", previousPanel);
+        this.previousPanel = previousPanel;
         eventoController = new EventoController();
 
         JPanel contentPanel = (JPanel) getContentPane().getComponent(1);

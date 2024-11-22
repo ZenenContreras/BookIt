@@ -17,8 +17,9 @@ public class UsuarioController {
 
     // Método para obtener el tipo de usuario por email
     public String obtenerTipoUsuario(String email) {
-        return usuarioDAO.obtenerTipoUsuarioPorEmail(email, "usuario", "correo", "tipo_usuarioid");
+        return usuarioDAO.obtenerTipoUsuarioPorEmail(email);
     }
+
 
     public void registrarUsuario(String nombre, String correo, String contraseña) {
         usuarioDAO.agregarUsuario(nombre, correo, contraseña);
